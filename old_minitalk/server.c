@@ -9,14 +9,14 @@ char	byte_to_char(char *byte)
 	int	pow;
 	char	character;
 
-	i = 7;
+	i = 0;
 	pow = 1;
 	character = 0;
-	while (i)
+	while (i < 8)
 	{
 		character += (byte[i] - '0') * pow;
 		pow = pow * 2;
-		i--;
+		i++;
 	}
 	return (character);
 }

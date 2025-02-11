@@ -26,7 +26,7 @@ char	*put_binary(int	num)
 	return bin;
 }
 
-char	*handler(char *str)
+char	*string_to_binary(char *str)
 {
 	int	i;
 	char	*bin_string;
@@ -41,23 +41,21 @@ char	*handler(char *str)
 	}
 	return bin_string;
 }
-#include <stdio.h>
+
+#include<stdio.h>
 int	main(int ac, char **av)
 {
-	struct sigaction	sa;
-	int					pid;
-	int					i;
+	int	pid;
+	char	*bin;
+	int	i;
 
-	if (ac != 3)
-		return (printf("./<file.exe> <PID> <string> !!!!!!\n"));
-	sa.sa_sigaction = handler;
-	sa.sa_flags = SA_SIGINFO;
-	sigemptyset(&sa.sa_mask);
-	pid = ft_atoi(av[1]);
 	i = 0;
-	while(av[2][i])
+	bin = string_to_binary(av[2]);
+	pid = ft_atoi(av[1]);
+	printf("%s\n",bin);
+	while(bin[i])
 	{
-		if (3)
+		if (bin[i] == '0')
 		{
 			kill(pid, SIGUSR1);
 		}
