@@ -31,7 +31,7 @@ static void	server_responding(void)
 		usleep(100);
 		if (i == 1000)
 		{
-			printf("Error : Server not responding, check the Server PID !\n");
+			ft_printf("Error: Server not responding, PID??");
 			exit(1);
 		}
 	}
@@ -46,9 +46,13 @@ static void	send_char_per_bit(char byte, int pid)
 	{
 		g_reseived = 0;
 		if ((byte >> bit) & 1)
-			kill(pid, SIGUSR1);
+		{
+			if (kill(pid, SIGUSR1) == -1)
+				exit(1);
+		}
 		else
-			kill(pid, SIGUSR2);
+			if (kill(pid, SIGUSR2) == -1)
+				exit(1);
 		server_responding();
 	}
 }
@@ -60,15 +64,15 @@ int	main(int ac, char **av)
 	struct sigaction	sa;
 
 	if (ac != 3)
-		return (printf("./<file.exe> <PID> <string> !!!!!!\n"));
+		return (ft_printf("./<file.exe> <PID> <string> !!!!!!\n"));
 	pid = ft_atoi(av[1]);
 	if (!pid)
-		return (printf("PID not valid"));
+		return (ft_printf("PID not valid"));
 	sa.sa_handler = handler;
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
 	if (sigaction(SIGUSR1, &sa, NULL) == -1)
-		return (printf("Error!\n"));
+		return (ft_printf("Error!\n"));
 	i = 0;
 	while (av[2][i])
 		send_char_per_bit(av[2][i++], pid);

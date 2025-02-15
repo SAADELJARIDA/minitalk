@@ -2,7 +2,7 @@
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+  $<     #
+#                                                     +:+ +:+         +:+      #
 #    By: sel-jari <sel-jari@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 16:29:21 by sel-jari          #+#    #+#              #
@@ -36,23 +36,21 @@ NAME = libft.a
 LIBC = ar rcs
 CC = cc
 RM = rm -f
-WFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
-all: $(OBJF_FT_PRINTF) ${NAME}
+all: ${NAME}
 
-$(OBJF_FT_PRINTF):
-	$(MAKE) -C $(FT_PRINTF_DIR)
-
-${NAME}: ${OBJF} 
+${NAME}: ${OBJF} $(OBJF_FT_PRINTF)
 	${LIBC} ${NAME} ${OBJF} ${OBJF_FT_PRINTF}
+
+$(OBJF_FT_PRINTF): $(SRCF_FT_PRINTF)
+	$(MAKE) -C $(FT_PRINTF_DIR)
 
 bonus: all ${OBJBF}
 	${LIBC} ${NAME} ${OBJBF} ${OBJF_FT_PRINTF}
-%.o: %.c
-	${CC} ${WFLAGS} -c $< -o $@
 
 clean:
-
+	${MAKE} clean -C $(FT_PRINTF_DIR)
 	${RM} ${OBJF} ${OBJBF} ${OBJF_FT_PRINTF}
 
 fclean: clean

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server_bonus.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sel-jari <marvin@42.ma>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -34,19 +34,24 @@ void	handler(int signum, siginfo_t *info, void *context)
 		count = 0;
 		c = 0;
 	}
-	kill(info->si_pid, SIGUSR1);
+	if (kill(info->si_pid, SIGUSR1) == -1)
+		exit(1);
 }
 
 int	main(void)
 {
 	struct sigaction	sa;
 
-	printf("PID :%d\n", getpid());
+	ft_printf("PID :%d\n", getpid());
 	sa.sa_sigaction = handler;
 	sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
+	if (sigaction(SIGUSR1, &sa, NULL) == -1
+		|| sigaction(SIGUSR2, &sa, NULL) == -1)
+	{
+		ft_printf("ERROR in sigaction");
+		exit(1);
+	}
 	while (1)
 		pause();
 }
