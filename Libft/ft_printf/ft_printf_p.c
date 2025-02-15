@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_printf_p.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-jari <marvin@42.ma>                    +#+  +:+       +#+        */
+/*   By: sel-jari <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 03:40:20 by sel-jari          #+#    #+#             */
-/*   Updated: 2025/02/15 03:40:23 by sel-jari         ###   ########.fr       */
+/*   Created: 2024/11/02 12:23:21 by sel-jari          #+#    #+#             */
+/*   Updated: 2024/11/07 20:59:01 by sel-jari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "ft_printf.h"
 
-# include <stdio.h>
-# include <signal.h>
-# include <unistd.h>
-# include "Libft/libft.h"
-# include "Libft/ft_printf/ft_printf.h"
+int	ft_printf_p(void *p)
+{
+	int	len;
 
-#endif
+	write(1, "0x", 2);
+	len = ft_printf_xl((unsigned long)p, 'x');
+	return (len + 2);
+}

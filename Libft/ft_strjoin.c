@@ -33,6 +33,5 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (s2[++i])
 		ptr[s1_len + i] = s2[i];
 	ptr[s1_len + s2_len] = 0;
-	free(s2);
 	return (ptr);
 }

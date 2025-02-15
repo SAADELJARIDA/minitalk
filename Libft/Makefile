@@ -2,7 +2,7 @@
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
+#                                                     +:+ +:+         +:+  $<     #
 #    By: sel-jari <sel-jari@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/28 16:29:21 by sel-jari          #+#    #+#              #
@@ -25,6 +25,11 @@ SRCBF = ft_lstnew_bonus.c ft_lstadd_front_bonus.c \
 	ft_lstadd_back_bonus.c ft_lstdelone_bonus.c \
 	ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c
 
+FT_PRINTF_FILES = ft_printf_conversion.c ft_printf_p.c ft_printf_xXl.c ft_printf_cs.c ft_printf.c ft_printf_idu.c
+FT_PRINTF_DIR = ft_printf
+SRCF_FT_PRINTF = $(addprefix $(FT_PRINTF_DIR)/, $(FT_PRINTF_FILES))
+
+OBJF_FT_PRINTF = ${SRCF_FT_PRINTF:.c=.o}
 OBJF = ${SRCF:.c=.o}
 OBJBF = ${SRCBF:.c=.o}
 NAME = libft.a
@@ -33,21 +38,26 @@ CC = cc
 RM = rm -f
 WFLAGS = -Wall -Wextra -Werror
 
-all: ${NAME}
+all: $(OBJF_FT_PRINTF) ${NAME}
 
-${NAME}: ${OBJF}
-	${LIBC} ${NAME} ${OBJF}
+$(OBJF_FT_PRINTF):
+	$(MAKE) -C $(FT_PRINTF_DIR)
+
+${NAME}: ${OBJF} 
+	${LIBC} ${NAME} ${OBJF} ${OBJF_FT_PRINTF}
 
 bonus: all ${OBJBF}
-	${LIBC} ${NAME} ${OBJBF}
+	${LIBC} ${NAME} ${OBJBF} ${OBJF_FT_PRINTF}
 %.o: %.c
 	${CC} ${WFLAGS} -c $< -o $@
 
 clean:
-	${RM} ${OBJF} ${OBJBF}
+
+	${RM} ${OBJF} ${OBJBF} ${OBJF_FT_PRINTF}
 
 fclean: clean
 	${RM} ${NAME}
+	${MAKE} fclean -C $(FT_PRINTF_DIR)
 
 re: fclean all
 

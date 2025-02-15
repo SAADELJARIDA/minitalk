@@ -16,13 +16,8 @@ int	g_reseived;
 
 static void	handler(int signum)
 {
-	static int	i;
-
 	if (signum == SIGUSR1)
-	{
-		printf("Signal %d has been reseived\n", ++i);
 		g_reseived = 1;
-	}
 }
 
 static void	server_responding(void)
